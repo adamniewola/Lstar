@@ -1,0 +1,53 @@
+(010) procedure Lstar(G,Ns,Ng,dg,h,w,dgmin)
+(020) compute f0=h(Ns) and df, 
+      initialize open list – table of 
+      sublists (OL)
+(030) put Ns to the first sublist of 
+      the open list OL(1) with 
+      f=wh(Ns), put Ns into tree T
+(040) pathExist = false
+(045) subList = 1
+(050) while OL is not empty
+(055)   for every node from the current   
+       sublist OL(subList) 
+(060)   get the first node from the 
+        current sublist N=OL(subList), 
+        delete N from the sublist
+(070)   if N = Ng then
+(080)    pathExist = true
+(090)    goto label A
+(100)   end if
+(110)   for every N’ adjacent to N
+(120)    if N’ is not marked ‘visited’ 
+         then
+(130)     add N’ to T with a pointer 
+          toward N		
+(140)     f(N’)=g(N)+dg(N,N’)+wh(N’)
+(145)     SL=floor(f(N’)-f0)/df)+1
+(150)     insert N’ to the first
+          position of the sublist OL(SL)
+          and mark N’‘visited’ 
+(160)    else 
+(170)     if g(N)+dg(N,N’) < g(N’) then 
+(180)      modify T by redirecting 
+           pointer of N’ toward N	
+(190)      f(N’)=g(N)+dg(N,N’)+wh(N’)
+(195)      SL=floor(f(N’)-f0)/df)+1
+(200)      delete N’ from the previous 
+           open sublist
+(210)      insert N’ to the first 
+           position of the sublist OL(SL) (220)     end if
+(230)    end if
+(240)   end for
+(243)  end for 
+(246)  subList++
+(250) end while
+(260) label A
+(270) if pathExist = true then
+(280)  return reconstructed path by  
+       tracing the pointers from Ng to 
+       Ns
+(290) else
+(300)  return failure
+(310) end if 
+(320) end procedure
